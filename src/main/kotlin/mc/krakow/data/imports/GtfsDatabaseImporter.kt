@@ -2,9 +2,13 @@ package mc.krakow.data.imports
 
 import mc.krakow.data.DBSettings
 import mc.krakow.data.tables.*
+import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.Transaction
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.io.File
+import java.io.FileNotFoundException
 
 private val tables = arrayOf(
     AgencyTable,
@@ -20,12 +24,12 @@ private val tables = arrayOf(
 
 /**
  * Imports GTFS data from an extracted directory into an SQLite database.
- * Uses Exposed DSL instead of raw SQL.
  */
 open class GtfsDatabaseImporter(
-    protected val gtfsDir: File
+    protected val gtfsDir: File,
+    protected val db: Database = DBSettings.db
 ) {
-
+    private val log: Logger = LoggerFactory.getLogger(GtfsDatabaseImporter::class.java)
     init {
         require(gtfsDir.exists() && gtfsDir.isDirectory) {
             "GTFS directory does not exist: ${gtfsDir.absolutePath}"
@@ -39,10 +43,28 @@ open class GtfsDatabaseImporter(
      */
     fun importData() {
         tables.forEach { table ->
-            transaction(DBSettings.db) {
-                SchemaUtils.create(table)
-                table.populate(File("${gtfsDir.absolutePath}/${table.name}.txt"))
-            }
+            createAndPopulate(table)
         }
     }
+
+    private fun createAndPopulate(table: PopulatableTable) {
+        transaction {
+            SchemaUtils.create(table)
+            tryPopulate(table)
+        }
+    }
+
+    private fun tryPopulate(table: PopulatableTable) {
+        try {
+            table.populate(File("${gtfsDir.absolutePath}/${table.name}.txt"))
+        } catch (e: FileNotFoundException) {
+            log.error("Table ${table.name} not imported, because the exception occurred.", e)
+        }
+    }
+
+    /**
+     * A wrapper for org.jetbrains.exposed.sql.transactions.transaction that uses db that was passed in the constructor
+     */
+    protected fun <T> transaction(statement: Transaction.() -> T): T =
+        org.jetbrains.exposed.sql.transactions.transaction(db, statement)
 }
