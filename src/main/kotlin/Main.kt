@@ -7,7 +7,7 @@ import java.io.File
 fun main() {
     val workDir = File("tmp")
     val downloader = GtfsDownloader("https://gtfs.ztp.krakow.pl/GTFS_KRK_T.zip", workDir)
-    downloader.downloadAndExtract()
-    val importer = GtfsDatabaseImporter(workDir)
+    val extractedFiles: Collection<File> = downloader.downloadAndExtract()
+    val importer = GtfsDatabaseImporter(extractedFiles)
     importer.importData()
 }

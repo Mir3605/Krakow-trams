@@ -23,23 +23,16 @@ private val tables = arrayOf(
 )
 
 /**
- * Imports GTFS data from an extracted directory into an SQLite database.
+ * Imports GTFS data from the gtfsFiles into an SQLite database.
  */
 open class GtfsDatabaseImporter(
-    protected val gtfsDir: File,
+    protected val gtfsFiles: Collection<File>,
     protected val db: Database = DBSettings.db
 ) {
     private val log: Logger = LoggerFactory.getLogger(GtfsDatabaseImporter::class.java)
-    init {
-        require(gtfsDir.exists() && gtfsDir.isDirectory) {
-            "GTFS directory does not exist: ${gtfsDir.absolutePath}"
-        }
-    }
-
 
     /**
-     * Reads all supported GTFS files found in the directory
-     * and imports them into the database.
+     * Tries to populate all the tables with the gtfsFiles. Logs message when unsuccessful.
      */
     fun importData() {
         tables.forEach { table ->
@@ -55,8 +48,16 @@ open class GtfsDatabaseImporter(
     }
 
     private fun tryPopulate(table: PopulatableTable) {
+        val tableFile: File? = gtfsFileForTable(table)
+        if (tableFile == null) {
+            log.warn(
+                "Gtfs table file was not passed in the constructor for table ${table.name}. " +
+                        "Skipping import of this table."
+            )
+            return
+        }
         try {
-            table.populate(File("${gtfsDir.absolutePath}/${table.name}.txt"))
+            table.populate(tableFile)
         } catch (e: FileNotFoundException) {
             log.error("Table ${table.name} not imported, because the exception occurred.", e)
         }
@@ -67,4 +68,7 @@ open class GtfsDatabaseImporter(
      */
     protected fun <T> transaction(statement: Transaction.() -> T): T =
         org.jetbrains.exposed.sql.transactions.transaction(db, statement)
+
+    private fun gtfsFileForTable(table: PopulatableTable): File? =
+        gtfsFiles.find { file -> file.name.equals("${table.name}.txt") }
 }

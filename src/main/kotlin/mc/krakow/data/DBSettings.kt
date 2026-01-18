@@ -2,7 +2,7 @@ package mc.krakow.data
 
 import org.jetbrains.exposed.sql.Database
 
-object DBSettings {
+internal object DBSettings {
     private const val DB_FILE_PATH = "gtfs.db"
 
     val db by lazy {
