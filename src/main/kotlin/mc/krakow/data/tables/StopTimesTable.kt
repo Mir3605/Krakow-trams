@@ -1,6 +1,6 @@
 package mc.krakow.data.tables
 
-import org.jetbrains.exposed.sql.insertIgnore
+import org.jetbrains.exposed.sql.insert
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -16,7 +16,7 @@ object StopTimesTable : PopulatableTable("stop_times") {
     val dropOffType = integer("drop_off_type")
     val shapeDistTraveled = double("shape_dist_traveled")
     val timepoint = integer("timepoint")
-    override val primaryKey = PrimaryKey(tripId)
+    override val primaryKey = PrimaryKey(tripId, stopSequence)
 
     override fun populate(sourceFile: File) {
         if (!sourceFile.exists()) {
@@ -27,7 +27,7 @@ object StopTimesTable : PopulatableTable("stop_times") {
             lines.drop(1).forEach { line ->
                 val cols = line.split(',')
                 if (cols.size >= 10) {
-                    insertIgnore { table ->
+                    insert { table ->
                         table[tripId] = cols[0]
                         table[arrivalTime] = cols[1]
                         table[departureTime] = cols[2]

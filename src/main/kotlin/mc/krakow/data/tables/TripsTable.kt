@@ -1,6 +1,6 @@
 package mc.krakow.data.tables
 
-import org.jetbrains.exposed.sql.insertIgnore
+import org.jetbrains.exposed.sql.insert
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -26,7 +26,7 @@ object TripsTable : PopulatableTable("trips") {
             lines.drop(1).forEach { line ->
                 val cols = line.split(',')
                 if (cols.size >= 9) {
-                    insertIgnore { table ->
+                    insert { table ->
                         table[tripId] = cols[0]
                         table[routeId] = cols[1]
                         table[serviceId] = cols[2]

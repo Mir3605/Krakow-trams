@@ -1,6 +1,6 @@
 package mc.krakow.data.tables
 
-import org.jetbrains.exposed.sql.insertIgnore
+import org.jetbrains.exposed.sql.insert
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -27,7 +27,7 @@ object CalendarTable : PopulatableTable("calendar") {
             lines.drop(1).forEach { line ->
                 val cols = line.split(',')
                 if (cols.size >= 10) {
-                    insertIgnore { table ->
+                    insert { table ->
                         table[serviceId] = cols[0]
                         table[monday] = cols[1].toInt()
                         table[tuesday] = cols[2].toInt()

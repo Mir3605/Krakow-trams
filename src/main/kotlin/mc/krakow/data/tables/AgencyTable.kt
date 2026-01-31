@@ -1,6 +1,6 @@
 package mc.krakow.data.tables
 
-import org.jetbrains.exposed.sql.insertIgnore
+import org.jetbrains.exposed.sql.insert
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -25,7 +25,7 @@ object AgencyTable : PopulatableTable("agency") {
             lines.drop(1).forEach { line ->
                 val cols = line.split(',')
                 if (cols.size >= 8) {
-                    insertIgnore { table ->
+                    insert { table ->
                         table[agencyId] = cols[0]
                         table[agencyName] = cols[1]
                         table[agencyUrl] = cols[2]

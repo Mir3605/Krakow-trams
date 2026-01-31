@@ -1,6 +1,6 @@
 package mc.krakow.data.tables
 
-import org.jetbrains.exposed.sql.insertIgnore
+import org.jetbrains.exposed.sql.insert
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -11,7 +11,7 @@ object ShapesTable : PopulatableTable("shapes") {
     val shapePtLon = double("shape_pt_lon")
     val shapePtSequence = integer("shape_pt_sequence")
     val shapeDistTraveled = varchar("shape_dist_traveled", 128).nullable()
-    override val primaryKey = PrimaryKey(shapeId)
+    override val primaryKey = PrimaryKey(shapeId, shapePtSequence)
 
     override fun populate(sourceFile: File) {
         if (!sourceFile.exists()) {
@@ -22,7 +22,7 @@ object ShapesTable : PopulatableTable("shapes") {
             lines.drop(1).forEach { line ->
                 val cols = line.split(',')
                 if (cols.size >= 5) {
-                    insertIgnore { table ->
+                    insert { table ->
                         table[shapeId] = cols[0]
                         table[shapePtLat] = cols[1].toDouble()
                         table[shapePtLon] = cols[2].toDouble()

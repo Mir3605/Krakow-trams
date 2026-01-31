@@ -1,6 +1,6 @@
 package mc.krakow.data.tables
 
-import org.jetbrains.exposed.sql.insertIgnore
+import org.jetbrains.exposed.sql.insert
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -30,7 +30,7 @@ object StopsTable : PopulatableTable("stops") {
             lines.drop(1).forEach { line ->
                 val cols = line.split(',')
                 if (cols.size >= 13) {
-                    insertIgnore { table ->
+                    insert { table ->
                         table[stopId] = cols[0]
                         table[stopCode] = cols[1].takeIf { it.isNotBlank() }
                         table[stopName] = cols[2]

@@ -1,6 +1,6 @@
 package mc.krakow.data.tables
 
-import org.jetbrains.exposed.sql.insertIgnore
+import org.jetbrains.exposed.sql.insert
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -22,7 +22,7 @@ object FeedInfoTable : PopulatableTable("feed_info") {
             lines.drop(1).forEach { line ->
                 val cols = line.split(',')
                 if (cols.size >= 6) {
-                    insertIgnore { table ->
+                    insert { table ->
                         table[feedPublisherName] = cols[0]
                         table[feedPublisherUrl] = cols[1]
                         table[feedLang] = cols[2]

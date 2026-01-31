@@ -1,6 +1,6 @@
 package mc.krakow.data.tables
 
-import org.jetbrains.exposed.sql.insertIgnore
+import org.jetbrains.exposed.sql.insert
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -9,7 +9,6 @@ object CalendarDatesTable : PopulatableTable("calendar_dates") {
     val serviceId = varchar("service_id", 64)
     val date = integer("date")
     val exceptionType = integer("exception_type")
-    override val primaryKey = PrimaryKey(serviceId)
 
     override fun populate(sourceFile: File) {
         if (!sourceFile.exists()) {
@@ -20,7 +19,7 @@ object CalendarDatesTable : PopulatableTable("calendar_dates") {
             lines.drop(1).forEach { line ->
                 val cols = line.split(',')
                 if (cols.size >= 3) {
-                    insertIgnore { table ->
+                    insert { table ->
                         table[serviceId] = cols[0]
                         table[date] = cols[1].toInt()
                         table[exceptionType] = cols[2].toInt()
