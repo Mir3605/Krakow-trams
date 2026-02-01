@@ -10,5 +10,6 @@ sqlite-jdbc = { group = "org.xerial", name = "sqlite-jdbc", version = "3.45.1.0"
 log4j-api = { group = "org.apache.logging.log4j", name = "log4j-api", version.ref = "log4j" }
 log4j-core = { group = "org.apache.logging.log4j", name = "log4j-core", version.ref = "log4j" }
 log4j-slf4j = { group = "org.apache.logging.log4j", name = "log4j-slf4j2-impl", version.ref = "log4j" }
+jgrapht-core = { group = "org.jgrapht", name = "jgrapht-core", version = "1.5.2" }
 
 [plugins]
