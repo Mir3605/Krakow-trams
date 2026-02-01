@@ -42,20 +42,20 @@ class DataBrowserTest : DatabaseTest() {
     @Test
     fun `getTimeForTripId returns proper trip duration`() {
         val tripDuration = dataBrowser.getTimeForTripId(TripId("block_2_trip_3_service_1"))
-        assertEquals(900L, tripDuration)
+        assertEquals(2520L, tripDuration)
     }
 
     @Test
     fun `getStopName returns proper stop name`() {
         val stopName = dataBrowser.getStopName(StopId("stop_293_61329"))
-        assertEquals("Grodzki Urząd Pracy", stopName.name)
+        assertEquals("Brożka (nż)", stopName.name)
     }
 
     @Test
     fun `getTerminusNames returns proper terminus names`() {
         val terminusNames = dataBrowser.getTerminusNames(TripId("block_2_trip_3_service_1"))
-        assertEquals("stop_221_32519", terminusNames.first.name)
-        assertEquals("stop_293_61329", terminusNames.second.name)
+        assertEquals("stop_258_44219", terminusNames.first.name)
+        assertEquals("stop_213_31119", terminusNames.second.name)
     }
 
     @Test

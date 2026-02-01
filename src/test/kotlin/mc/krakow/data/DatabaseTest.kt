@@ -86,104 +86,58 @@ abstract class DatabaseTest {
 
     private fun insertStops() {
         StopsTable.insert {
-            it[StopsTable.stopId] = "stop_293_61329"
-            it[StopsTable.stopName] = "Grodzki Urząd Pracy"
-            it[StopsTable.stopDesc] = ""
-            it[StopsTable.stopLat] = 50.0873
-            it[StopsTable.stopLon] = 20.0596
-            it[StopsTable.locationType] = 0
-        }
-
-        StopsTable.insert {
-            it[StopsTable.stopId] = "stop_292_61229"
-            it[StopsTable.stopName] = "Kościuszkowców"
-            it[StopsTable.stopDesc] = ""
-            it[StopsTable.stopLat] = 50.016651
-            it[StopsTable.stopLon] = 19.929831
-            it[StopsTable.locationType] = 0
-        }
-
-        StopsTable.insert {
-            it[StopsTable.stopId] = "stop_285_58429"
-            it[StopsTable.stopName] = "Solvay"
-            it[StopsTable.stopDesc] = ""
-            it[StopsTable.stopLat] = 50.014606
-            it[StopsTable.stopLon] = 19.927852
-            it[StopsTable.locationType] = 0
-        }
-
-        StopsTable.insert {
-            it[StopsTable.stopId] = "stop_284_57729"
-            it[StopsTable.stopName] = "Stefana Batorego"
-            it[StopsTable.stopDesc] = ""
-            it[StopsTable.stopLat] = 50.066586
-            it[StopsTable.stopLon] = 19.929432
-            it[StopsTable.locationType] = 0
-        }
-
-        StopsTable.insert {
-            it[StopsTable.stopId] = "stop_283_57629"
-            it[StopsTable.stopName] = "Nullo"
-            it[StopsTable.stopDesc] = ""
-            it[StopsTable.stopLat] = 50.060001
-            it[StopsTable.stopLon] = 19.966793
-            it[StopsTable.locationType] = 0
-        }
-
-        StopsTable.insert {
-            it[StopsTable.stopId] = "stop_282_57529"
+            it[StopsTable.stopId] = "stop_213_31119"
             it[StopsTable.stopName] = "Salwator"
             it[StopsTable.stopDesc] = ""
-            it[StopsTable.stopLat] = 50.060173
-            it[StopsTable.stopLon] = 19.967382
+            it[StopsTable.stopLat] = 50.052708
+            it[StopsTable.stopLon] = 19.913739
             it[StopsTable.locationType] = 0
         }
 
         StopsTable.insert {
-            it[StopsTable.stopId] = "stop_957_333829"
-            it[StopsTable.stopName] = "Wzg. Krzesławickie Start"
+            it[StopsTable.stopId] = "stop_219_32219"
+            it[StopsTable.stopName] = "Filharmonia"
             it[StopsTable.stopDesc] = ""
-            it[StopsTable.stopLat] = 50.060173
-            it[StopsTable.stopLon] = 19.967382
+            it[StopsTable.stopLat] = 50.05903
+            it[StopsTable.stopLon] = 19.93387
             it[StopsTable.locationType] = 0
         }
 
         StopsTable.insert {
-            it[StopsTable.stopId] = "stop_226_36129"
-            it[StopsTable.stopName] = "Wzg. Krzesławickie"
+            it[StopsTable.stopId] = "stop_219_32229"
+            it[StopsTable.stopName] = "Filharmonia"
             it[StopsTable.stopDesc] = ""
-            it[StopsTable.stopLat] = 50.060173
-            it[StopsTable.stopLon] = 19.967382
+            it[StopsTable.stopLat] = 50.058666
+            it[StopsTable.stopLon] = 19.933001
             it[StopsTable.locationType] = 0
         }
 
         StopsTable.insert {
-            it[StopsTable.stopId] = "stop_224_35919"
-            it[StopsTable.stopName] = "Wzg. Krzesławickie Mid"
+            it[StopsTable.stopId] = "stop_258_44219"
+            it[StopsTable.stopName] = "Wzgórza Krzesławickie"
             it[StopsTable.stopDesc] = ""
-            it[StopsTable.stopLat] = 50.060173
-            it[StopsTable.stopLon] = 19.967382
+            it[StopsTable.stopLat] = 50.094595
+            it[StopsTable.stopLon] = 20.064858
             it[StopsTable.locationType] = 0
         }
 
         StopsTable.insert {
-            it[StopsTable.stopId] = "stop_221_32519"
-            it[StopsTable.stopName] = "Wzg. Krzesławickie End"
+            it[StopsTable.stopId] = "stop_293_61329"
+            it[StopsTable.stopName] = "Brożka (nż)"
             it[StopsTable.stopDesc] = ""
-            it[StopsTable.stopLat] = 50.060173
-            it[StopsTable.stopLon] = 19.967382
+            it[StopsTable.stopLat] = 50.03053
+            it[StopsTable.stopLon] = 19.93173
             it[StopsTable.locationType] = 0
         }
     }
 
     private fun insertTrips() {
         // Insert Trips for route_31
-        // Salwator -> Wzg. Krzesławickie (unconventional shape_23346)
         TripsTable.insert {
             it[TripsTable.tripId] = "block_2_trip_1_service_1"
             it[TripsTable.routeId] = testRouteId.routeId
             it[TripsTable.serviceId] = "service_1"
-            it[TripsTable.tripHeadsign] = "Salwator"
+            it[TripsTable.tripHeadsign] = "Direction 1"
             it[TripsTable.tripShortName] = ""
             it[TripsTable.directionId] = 0
             it[TripsTable.blockId] = "block_2"
@@ -196,7 +150,7 @@ abstract class DatabaseTest {
                 it[TripsTable.tripId] = trip.tripId
                 it[TripsTable.routeId] = testRouteId.routeId
                 it[TripsTable.serviceId] = "service_1"
-                it[TripsTable.tripHeadsign] = "Wzg. Krzesławickie"
+                it[TripsTable.tripHeadsign] = "Direction 2"
                 it[TripsTable.tripShortName] = ""
                 it[TripsTable.directionId] = 0
                 it[TripsTable.blockId] = "block_2"
@@ -210,7 +164,7 @@ abstract class DatabaseTest {
                 it[TripsTable.tripId] = trip.tripId
                 it[TripsTable.routeId] = testRouteId.routeId
                 it[TripsTable.serviceId] = "service_1"
-                it[TripsTable.tripHeadsign] = "Salwator"
+                it[TripsTable.tripHeadsign] = "Direction 3"
                 it[TripsTable.tripShortName] = ""
                 it[TripsTable.directionId] = 1
                 it[TripsTable.blockId] = "block_2"
